@@ -15,7 +15,9 @@ export function GetStartedButton({ size = "default", className = "" }: GetStarte
       className={`pirate-button ${size === "nav" ? "pirate-button--nav" : ""} ${className}`}
       aria-label="Get Started with PirateAgent"
     >
-      <span>GET STARTED</span>
+      <span className="pirate-button__inner">
+        <span className="pirate-button__text">GET STARTED</span>
+      </span>
     </Link>
   );
 }
