@@ -34,7 +34,7 @@ export default function LoginPage() {
               <AnchorIcon className="h-5 w-5" />
             </div>
             <h1 className="font-serif text-2xl font-bold tracking-tight text-foreground">Welcome back</h1>
-            <p className="mt-1 text-[13px] text-muted-foreground">Log in to enter the PirateAgent command deck</p>
+            <p className="mt-1 text-[13px] text-muted-foreground">Log in to continue your research</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">

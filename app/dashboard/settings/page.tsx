@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
+import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 const THEMES = [
@@ -18,6 +19,7 @@ const THEMES = [
 ] as const;
 
 export default function SettingsPage() {
+  const router = useRouter();
   const [theme, setTheme] = useState<(typeof THEMES)[number]["key"]>("light");
   const [defaultSourceCap, setDefaultSourceCap] = useState("50");
   const [autoDedupe, setAutoDedupe] = useState(true);
@@ -69,9 +71,20 @@ export default function SettingsPage() {
                   <Input id="email" type="email" defaultValue="vishal@pirateagent.ai" className="bg-surface/50 border-border text-foreground" />
                 </div>
               </div>
-              <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary-hover font-semibold">
-                Save changes
-              </Button>
+              <div className="flex items-center gap-3 pt-1">
+                <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary-hover font-semibold">
+                  Save changes
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  type="button"
+                  onClick={() => router.push("/")}
+                  className="text-danger hover:bg-danger-soft hover:text-danger hover:border-danger/30 font-medium"
+                >
+                  Sign out
+                </Button>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>

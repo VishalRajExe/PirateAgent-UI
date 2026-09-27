@@ -69,7 +69,7 @@ export function Topbar({ title }: { title?: string }) {
               <SettingsIcon className="h-3.5 w-3.5 mr-2 text-muted-foreground" /> Settings
             </DropdownMenuItem>
             <DropdownMenuSeparator className="bg-border/60" />
-            <DropdownMenuItem onClick={() => router.push("/login")} className="cursor-pointer text-danger focus:bg-danger-soft hover:bg-danger-soft">
+            <DropdownMenuItem onClick={() => router.push("/")} className="cursor-pointer text-danger focus:bg-danger-soft hover:bg-danger-soft">
               <LogOut className="h-3.5 w-3.5 mr-2" /> Sign out
             </DropdownMenuItem>
           </DropdownMenuContent>

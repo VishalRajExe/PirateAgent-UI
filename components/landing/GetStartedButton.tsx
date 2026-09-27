@@ -10,7 +10,7 @@ interface GetStartedButtonProps {
 export function GetStartedButton({ size = "default", className = "" }: GetStartedButtonProps) {
   return (
     <Link
-      href="/dashboard"
+      href="/login"
       id="get-started-cta"
       className={`pirate-button ${size === "nav" ? "pirate-button--nav" : ""} ${className}`}
       aria-label="Get Started with PirateAgent"
