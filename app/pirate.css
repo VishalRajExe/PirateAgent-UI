@@ -371,8 +371,8 @@
 /* Tablet (768px - 1149px) */
 @media screen and (min-width: 768px) and (max-width: 1149px) {
   .pirate-ship-wrapper {
-    width: clamp(380px, 44vw, 500px);
-    right: 1.5rem;
+    width: clamp(400px, 46vw, 530px);
+    right: 2rem;
     bottom: 2rem;
   }
 
@@ -409,10 +409,10 @@
   }
 
   .pirate-ship-wrapper {
-    width: clamp(480px, 36vw, 600px);
-    left: clamp(30rem, 38vw, 48vw);
+    width: clamp(520px, 40vw, 650px);
+    left: clamp(34rem, 44vw, 54vw);
     right: auto;
-    bottom: 2.2rem;
+    bottom: 2rem;
   }
 
   .pirate-wave {
