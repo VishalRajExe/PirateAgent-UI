@@ -1,0 +1,62 @@
+"use client";
+import { useMemo, useState } from "react";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { Search, Database } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { EmptyState } from "@/components/common/empty-state";
+import { MOCK_DATASETS } from "@/lib/mock-data";
+import { formatNumber, formatDate } from "@/lib/utils";
+
+export default function DatasetsPage() {
+  const [query, setQuery] = useState("");
+
+  const filtered = useMemo(
+    () => MOCK_DATASETS.filter((d) => d.name.toLowerCase().includes(query.toLowerCase())),
+    [query]
+  );
+
+  return (
+    <div className="space-y-5">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h1 className="text-lg font-semibold">Datasets</h1>
+          <p className="mt-0.5 text-[13px] text-muted-foreground">Clean, source-backed results from your completed workflows.</p>
+        </div>
+        <div className="relative w-full max-w-[240px]">
+          <Search className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
+          <Input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search datasets…" className="h-8 pl-8 text-[13px]" />
+        </div>
+      </div>
+
+      {filtered.length === 0 ? (
+        <EmptyState icon={Database} title="No datasets found" description="Datasets appear here once a workflow finishes collecting data." />
+      ) : (
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
+          {filtered.map((d, i) => (
+            <motion.div key={d.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.04 }}>
+              <Link href={`/dashboard/datasets/${d.id}`}>
+                <Card className="h-full transition-shadow hover:shadow-card">
+                  <CardContent className="p-4">
+                    <div className="flex items-start justify-between gap-2">
+                      <p className="text-[13.5px] font-medium leading-snug">{d.name}</p>
+                      <Badge variant={d.status === "ready" ? "success" : "warning"}>{d.status === "ready" ? "Ready" : "Partial"}</Badge>
+                    </div>
+                    <p className="mt-1.5 line-clamp-2 text-[12.5px] text-muted-foreground">{d.description}</p>
+                    <div className="mt-4 flex items-center justify-between text-[12px] text-muted-foreground">
+                      <span>{formatNumber(d.recordCount)} records</span>
+                      <span>{d.sourceCount} sources</span>
+                      <span>{formatDate(d.updatedAt)}</span>
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
+            </motion.div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}

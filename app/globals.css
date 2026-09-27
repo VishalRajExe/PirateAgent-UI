@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 240 20% 99%;
+    --foreground: 222 20% 14%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 20% 14%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 20% 14%;
+
+    --surface: 240 14% 97%;
+
+    --border: 220 16% 90%;
+    --input: 220 16% 88%;
+    --ring: 255 78% 66%;
+
+    --muted: 240 14% 96%;
+    --muted-foreground: 222 10% 46%;
+
+    --accent: 255 92% 97%;
+    --accent-foreground: 255 60% 40%;
+
+    --primary: 255 78% 63%;
+    --primary-hover: 255 70% 55%;
+    --primary-foreground: 0 0% 100%;
+    --primary-soft: 255 92% 96%;
+
+    --success: 142 71% 38%;
+    --success-soft: 142 71% 94%;
+    --warning: 32 92% 45%;
+    --warning-soft: 38 92% 93%;
+    --danger: 0 72% 51%;
+    --danger-soft: 0 86% 95%;
+    --info: 199 89% 42%;
+    --info-soft: 199 89% 94%;
+
+    --radius: 10px;
+  }
+
+  .dark {
+    --background: 222 24% 7%;
+    --foreground: 220 20% 94%;
+    --card: 222 22% 10%;
+    --card-foreground: 220 20% 94%;
+    --popover: 222 22% 10%;
+    --popover-foreground: 220 20% 94%;
+    --surface: 222 20% 9%;
+    --border: 222 16% 18%;
+    --input: 222 16% 20%;
+    --ring: 255 78% 66%;
+    --muted: 222 18% 14%;
+    --muted-foreground: 220 10% 65%;
+    --accent: 255 30% 16%;
+    --accent-foreground: 255 80% 80%;
+    --primary: 255 78% 68%;
+    --primary-hover: 255 78% 75%;
+    --primary-foreground: 222 24% 10%;
+    --primary-soft: 255 30% 16%;
+    --success: 142 60% 50%;
+    --success-soft: 142 40% 14%;
+    --warning: 38 90% 55%;
+    --warning-soft: 38 50% 14%;
+    --danger: 0 80% 65%;
+    --danger-soft: 0 50% 15%;
+    --info: 199 85% 55%;
+    --info-soft: 199 50% 14%;
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+  html { scroll-behavior: smooth; }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "cv11", "ss01";
+  }
+  ::selection { @apply bg-primary/20; }
+}
+
+@layer utilities {
+  .scrollbar-thin::-webkit-scrollbar { height: 6px; width: 6px; }
+  .scrollbar-thin::-webkit-scrollbar-thumb { @apply bg-border rounded-full; }
+  .scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+}
