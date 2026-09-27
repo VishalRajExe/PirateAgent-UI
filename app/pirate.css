@@ -242,11 +242,17 @@
   z-index: 14;
   transform-origin: center center;
   animation: pirate-ship 2.2s linear infinite;
+  max-height: calc(100vh - 6.5rem);
+  max-height: calc(100dvh - 6.5rem);
+  display: flex;
+  align-items: flex-end;
 }
 
 .pirate-ship {
   display: block;
   width: 100%;
+  max-height: calc(100vh - 6.5rem);
+  max-height: calc(100dvh - 6.5rem);
   height: auto;
   user-select: none;
 }
@@ -365,9 +371,9 @@
 /* Tablet (768px - 1149px) */
 @media screen and (min-width: 768px) and (max-width: 1149px) {
   .pirate-ship-wrapper {
-    width: clamp(480px, 52vw, 640px);
-    right: 0.5rem;
-    bottom: 2.2rem;
+    width: clamp(380px, 44vw, 500px);
+    right: 1.5rem;
+    bottom: 2rem;
   }
 
   .pirate-waves--3 {
@@ -403,10 +409,10 @@
   }
 
   .pirate-ship-wrapper {
-    width: clamp(700px, 52vw, 980px);
-    left: clamp(34rem, 42vw, 54vw);
+    width: clamp(480px, 36vw, 600px);
+    left: clamp(30rem, 38vw, 48vw);
     right: auto;
-    bottom: 2.4rem;
+    bottom: 2.2rem;
   }
 
   .pirate-wave {
