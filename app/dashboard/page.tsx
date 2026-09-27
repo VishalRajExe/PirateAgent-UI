@@ -1,6 +1,11 @@
 "use client";
 import { motion } from "framer-motion";
-import { Workflow, Loader2, Database, Globe2 } from "lucide-react";
+import {
+  CompassIcon,
+  ShipWheelIcon,
+  CargoIcon,
+  LighthouseIcon,
+} from "@/components/icons";
 import { PromptBox } from "@/components/dashboard/prompt-box";
 import { StatCard } from "@/components/dashboard/stat-card";
 import { RecentWorkflows } from "@/components/dashboard/recent-workflows";
@@ -29,10 +34,30 @@ export default function DashboardPage() {
       </motion.div>
 
       <motion.div variants={item} className="grid grid-cols-2 gap-3 md:grid-cols-4">
-        <StatCard icon={Workflow} label="Total workflows" value={formatNumber(MOCK_WORKFLOWS.length)} tone="primary" />
-        <StatCard icon={Loader2} label="Running now" value={formatNumber(running)} tone="warning" />
-        <StatCard icon={Database} label="Records collected" value={formatNumber(totalRecords)} tone="success" />
-        <StatCard icon={Globe2} label="Sources used" value={formatNumber(totalSources)} />
+        <StatCard
+          icon={CompassIcon}
+          label="Total workflows"
+          value={formatNumber(MOCK_WORKFLOWS.length)}
+          tone="primary"
+        />
+        <StatCard
+          icon={ShipWheelIcon}
+          label="Running now"
+          value={formatNumber(running)}
+          tone="warning"
+        />
+        <StatCard
+          icon={CargoIcon}
+          label="Records collected"
+          value={formatNumber(totalRecords)}
+          tone="success"
+        />
+        <StatCard
+          icon={LighthouseIcon}
+          label="Sources used"
+          value={formatNumber(totalSources)}
+          tone="default"
+        />
       </motion.div>
 
       <motion.div variants={item} className="grid grid-cols-1 gap-4 lg:grid-cols-2">

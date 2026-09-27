@@ -2,7 +2,8 @@
 import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowRight, Loader2, Pencil, Sparkles } from "lucide-react";
+import { ArrowLeft, ArrowRight, Loader2, Pencil } from "lucide-react";
+import { SpyglassIcon, CompassIcon, ShipWheelIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { PlanPreview } from "@/components/research/plan-preview";
@@ -50,7 +51,7 @@ function NewResearchInner() {
     <div className="mx-auto max-w-2xl">
       <button
         onClick={() => router.push("/dashboard")}
-        className="mb-4 flex items-center gap-1.5 text-[13px] text-muted-foreground hover:text-foreground transition-colors"
+        className="mb-4 flex items-center gap-1.5 text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors"
       >
         <ArrowLeft className="h-3.5 w-3.5" /> Back to dashboard
       </button>
@@ -58,17 +59,27 @@ function NewResearchInner() {
       <AnimatePresence mode="wait">
         {stage === "input" && (
           <motion.div key="input" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <h1 className="text-xl font-semibold">New research request</h1>
-            <p className="mt-1 text-[13px] text-muted-foreground">Describe the data you need in plain English.</p>
+            <div className="mb-2 flex items-center gap-2 text-tan">
+              <SpyglassIcon className="h-4 w-4" />
+              <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                MISSION BRIEF
+              </span>
+            </div>
+            <h1 className="font-serif text-2xl font-bold tracking-tight text-foreground md:text-3xl">
+              New research request
+            </h1>
+            <p className="mt-1 text-[13.5px] text-muted-foreground leading-relaxed">
+              Describe the data you need in plain English — PirateAgent will chart the course and collect it.
+            </p>
             <Textarea
               autoFocus
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               placeholder="e.g. Find 200 AI startups in India with founder, website, funding and LinkedIn"
               rows={4}
-              className="mt-4 text-[14px]"
+              className="mt-4 text-[14px] bg-card border-border text-foreground"
             />
-            <Button className="mt-4" onClick={analyze}>
+            <Button className="mt-4 bg-primary text-primary-foreground hover:bg-primary-hover font-semibold" onClick={analyze}>
               Analyze request <ArrowRight className="h-3.5 w-3.5" />
             </Button>
           </motion.div>
@@ -82,29 +93,33 @@ function NewResearchInner() {
             exit={{ opacity: 0 }}
             className="flex flex-col items-center rounded-xl border border-border bg-card py-16 text-center shadow-subtle"
           >
-            <div className="relative flex h-12 w-12 items-center justify-center">
-              <span className="absolute inset-0 animate-ping rounded-full bg-primary-soft" />
-              <span className="relative flex h-10 w-10 items-center justify-center rounded-full bg-primary-soft">
-                <Sparkles className="h-4.5 w-4.5 text-primary" />
+            <div className="relative flex h-14 w-14 items-center justify-center">
+              <span className="absolute inset-0 animate-ping rounded-full bg-tan/20" />
+              <span className="relative flex h-12 w-12 items-center justify-center rounded-full bg-surface border border-border text-tan">
+                <CompassIcon className="h-6 w-6 animate-spin" style={{ animationDuration: "6s" }} />
               </span>
             </div>
-            <p className="mt-4 text-[14px] font-medium">Understanding your requirement</p>
-            <p className="mt-1 max-w-sm text-[13px] text-muted-foreground">
-              Identifying the entity, fields, filters and best sources to collect from.
+            <p className="mt-4 font-serif text-lg font-bold text-foreground">Planning research trajectory</p>
+            <p className="mt-1 max-w-sm text-[13px] text-muted-foreground leading-relaxed">
+              Identifying target entities, data contracts, verification filters and source ports.
             </p>
           </motion.div>
         )}
 
         {stage === "review" && contract && (
           <motion.div key="review" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <div className="mb-5 flex items-start justify-between gap-3 rounded-lg border border-border bg-surface p-3.5">
+            <div className="mb-5 flex items-start justify-between gap-3 rounded-lg border border-border bg-card p-4 shadow-xs">
               <div className="min-w-0">
-                <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">Your request</p>
-                <p className="mt-0.5 text-[13.5px] leading-snug">{prompt}</p>
+                <div className="flex items-center gap-1.5 text-tan">
+                  <SpyglassIcon className="h-3.5 w-3.5" />
+                  <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Your request</p>
+                </div>
+                <p className="mt-1 text-[13.5px] font-medium leading-snug text-foreground">{prompt}</p>
               </div>
               <button
+                type="button"
                 onClick={() => setStage("input")}
-                className="shrink-0 rounded-md p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+                className="shrink-0 rounded-md p-1.5 text-muted-foreground hover:bg-surface hover:text-foreground transition-colors"
               >
                 <Pencil className="h-3.5 w-3.5" />
               </button>
@@ -112,11 +127,11 @@ function NewResearchInner() {
 
             <PlanPreview contract={contract} onChange={setContract} />
 
-            <div className="mt-5 flex justify-end gap-2">
+            <div className="mt-5 flex justify-end gap-2.5">
               <Button variant="secondary" onClick={() => setStage("input")}>
                 Edit prompt
               </Button>
-              <Button onClick={startCollection}>
+              <Button onClick={startCollection} className="bg-primary text-primary-foreground hover:bg-primary-hover font-semibold">
                 Create workflow <ArrowRight className="h-3.5 w-3.5" />
               </Button>
             </div>

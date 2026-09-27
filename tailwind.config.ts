@@ -14,6 +14,11 @@ const config: Config = {
           "system-ui",
           "sans-serif",
         ],
+        serif: [
+          "Cormorant Garamond",
+          "Georgia",
+          "serif",
+        ],
         mono: ["JetBrains Mono", "ui-monospace", "SFMono-Regular", "monospace"],
       },
       colors: {
@@ -40,6 +45,9 @@ const config: Config = {
         card: { DEFAULT: "hsl(var(--card))", foreground: "hsl(var(--card-foreground))" },
         popover: { DEFAULT: "hsl(var(--popover))", foreground: "hsl(var(--popover-foreground))" },
         accent: { DEFAULT: "hsl(var(--accent))", foreground: "hsl(var(--accent-foreground))" },
+        tan: "#B78B62",
+        "warm-brown": "#8B5A3C",
+        "dark-brown": "#5A3928",
       },
       borderRadius: {
         lg: "var(--radius)",

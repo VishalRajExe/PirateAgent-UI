@@ -1,6 +1,5 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
 import { Pause, Play, Square, ArrowRight, RotateCcw, ArrowLeft } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -35,21 +34,25 @@ export function WorkflowRunView(props: WorkflowRunViewProps) {
   const isPaused = status === "paused";
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       <button
         onClick={() => router.push("/dashboard/workflows")}
-        className="flex items-center gap-1.5 text-[13px] text-muted-foreground hover:text-foreground transition-colors"
+        className="flex items-center gap-1.5 text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors"
       >
         <ArrowLeft className="h-3.5 w-3.5" /> All workflows
       </button>
 
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="min-w-0">
-          <div className="flex items-center gap-2.5">
-            <h1 className="text-lg font-semibold">{name}</h1>
+          <div className="flex items-center gap-3">
+            <h1 className="font-serif text-2xl font-bold tracking-tight text-foreground md:text-3xl">
+              {name}
+            </h1>
             <StatusBadge status={status} />
           </div>
-          <p className="mt-1 max-w-xl text-[13px] text-muted-foreground">{prompt}</p>
+          <p className="mt-1 max-w-2xl text-[13.5px] leading-relaxed text-muted-foreground">
+            {prompt}
+          </p>
         </div>
 
         <div className="flex gap-2">
@@ -74,27 +77,33 @@ export function WorkflowRunView(props: WorkflowRunViewProps) {
             </Button>
           )}
           {status === "completed" && datasetId && (
-            <Button size="sm" onClick={() => router.push(`/dashboard/datasets/${datasetId}`)}>
+            <Button
+              size="sm"
+              className="bg-primary text-primary-foreground hover:bg-primary-hover font-semibold"
+              onClick={() => router.push(`/dashboard/datasets/${datasetId}`)}
+            >
               View results <ArrowRight className="h-3.5 w-3.5" />
             </Button>
           )}
         </div>
       </div>
 
-      <Card>
+      <Card className="border-border bg-card shadow-subtle">
         <CardContent className="p-5">
-          <div className="mb-4 flex items-center justify-between text-[12.5px]">
-            <span className="font-medium text-muted-foreground">Overall progress</span>
-            <span className="font-semibold">{Math.round(progress)}%</span>
+          <div className="mb-3 flex items-center justify-between text-[12.5px]">
+            <span className="font-medium text-muted-foreground">Mission progress</span>
+            <span className="font-serif text-base font-bold text-foreground">{Math.round(progress)}%</span>
           </div>
           <Progress value={progress} />
         </CardContent>
       </Card>
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1.1fr_1.4fr]">
-        <Card>
+        <Card className="border-border bg-card shadow-subtle">
           <CardContent className="p-5">
-            <p className="mb-4 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Pipeline</p>
+            <p className="mb-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              Mission Pipeline
+            </p>
             <StageChecklist stages={stages} />
           </CardContent>
         </Card>
@@ -107,9 +116,11 @@ export function WorkflowRunView(props: WorkflowRunViewProps) {
             sourcesProcessed={props.sourcesProcessed}
             sourcesTotal={props.sourcesTotal}
           />
-          <Card>
+          <Card className="border-border bg-card shadow-subtle">
             <CardContent className="p-5">
-              <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Activity</p>
+              <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                Activity Log
+              </p>
               <ActivityLog items={log} />
             </CardContent>
           </Card>

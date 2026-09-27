@@ -1,7 +1,8 @@
 "use client";
 import { useMemo, useState } from "react";
 import { notFound, useRouter } from "next/navigation";
-import { ArrowLeft, Search, Database } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+import { SpyglassIcon, CargoIcon, LighthouseIcon, ShipLogIcon } from "@/components/icons";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -75,10 +76,10 @@ export default function DatasetDetailPage({ params }: { params: { id: string } }
   const exportRows = selectedRows.length > 0 ? selectedRows : filtered;
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       <button
         onClick={() => router.push("/dashboard/datasets")}
-        className="flex items-center gap-1.5 text-[13px] text-muted-foreground hover:text-foreground transition-colors"
+        className="flex items-center gap-1.5 text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors"
       >
         <ArrowLeft className="h-3.5 w-3.5" /> All datasets
       </button>
@@ -86,38 +87,59 @@ export default function DatasetDetailPage({ params }: { params: { id: string } }
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="min-w-0">
           <div className="flex items-center gap-2.5">
-            <h1 className="text-lg font-semibold">{dataset.name}</h1>
-            <Badge variant={dataset.status === "ready" ? "success" : "warning"}>{dataset.status === "ready" ? "Ready" : "Partial"}</Badge>
+            <h1 className="font-serif text-2xl font-bold tracking-tight text-foreground md:text-3xl">
+              {dataset.name}
+            </h1>
+            <Badge variant={dataset.status === "ready" ? "success" : "warning"}>
+              {dataset.status === "ready" ? "Ready" : "Partial"}
+            </Badge>
           </div>
-          <p className="mt-1 max-w-xl text-[13px] text-muted-foreground">{dataset.description}</p>
+          <p className="mt-1 max-w-xl text-[13.5px] leading-relaxed text-muted-foreground">
+            {dataset.description}
+          </p>
         </div>
         <ExportMenu rows={exportRows} name={dataset.name} count={selectedRows.length} />
       </div>
 
-      <div className="grid grid-cols-3 gap-3">
-        <Card>
-          <CardContent className="p-3.5">
-            <p className="text-lg font-semibold leading-none">{formatNumber(dataset.recordCount)}</p>
-            <p className="mt-1 text-[11.5px] text-muted-foreground">Records</p>
+      <div className="grid grid-cols-3 gap-3.5">
+        <Card className="border-border bg-card shadow-subtle">
+          <CardContent className="p-4 flex items-center gap-3">
+            <div className="h-9 w-9 rounded-md bg-surface border border-border flex items-center justify-center text-tan">
+              <CargoIcon className="h-4 w-4" />
+            </div>
+            <div>
+              <p className="font-serif text-xl font-bold leading-none text-foreground">{formatNumber(dataset.recordCount)}</p>
+              <p className="mt-1 text-[11.5px] font-medium text-muted-foreground">Verified Records</p>
+            </div>
           </CardContent>
         </Card>
-        <Card>
-          <CardContent className="p-3.5">
-            <p className="text-lg font-semibold leading-none">{dataset.sourceCount}</p>
-            <p className="mt-1 text-[11.5px] text-muted-foreground">Sources</p>
+        <Card className="border-border bg-card shadow-subtle">
+          <CardContent className="p-4 flex items-center gap-3">
+            <div className="h-9 w-9 rounded-md bg-surface border border-border flex items-center justify-center text-tan">
+              <LighthouseIcon className="h-4 w-4" />
+            </div>
+            <div>
+              <p className="font-serif text-xl font-bold leading-none text-foreground">{dataset.sourceCount}</p>
+              <p className="mt-1 text-[11.5px] font-medium text-muted-foreground">Sources Used</p>
+            </div>
           </CardContent>
         </Card>
-        <Card>
-          <CardContent className="p-3.5">
-            <p className="text-lg font-semibold leading-none">{formatDate(dataset.updatedAt)}</p>
-            <p className="mt-1 text-[11.5px] text-muted-foreground">Last updated</p>
+        <Card className="border-border bg-card shadow-subtle">
+          <CardContent className="p-4 flex items-center gap-3">
+            <div className="h-9 w-9 rounded-md bg-surface border border-border flex items-center justify-center text-tan">
+              <ShipLogIcon className="h-4 w-4" />
+            </div>
+            <div>
+              <p className="font-serif text-base font-bold leading-none text-foreground">{formatDate(dataset.updatedAt)}</p>
+              <p className="mt-1 text-[11.5px] font-medium text-muted-foreground">Last Updated</p>
+            </div>
           </CardContent>
         </Card>
       </div>
 
       <div className="flex flex-wrap items-center gap-2.5">
-        <div className="relative w-full max-w-[240px]">
-          <Search className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
+        <div className="relative w-full max-w-[260px]">
+          <SpyglassIcon className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
           <Input
             value={query}
             onChange={(e) => {
@@ -125,7 +147,7 @@ export default function DatasetDetailPage({ params }: { params: { id: string } }
               setPage(1);
             }}
             placeholder="Search records…"
-            className="h-8 pl-8 text-[13px]"
+            className="h-8 pl-8 text-[13px] bg-card border-border/80"
           />
         </div>
         <select
@@ -134,7 +156,7 @@ export default function DatasetDetailPage({ params }: { params: { id: string } }
             setConfidenceFilter(e.target.value as typeof confidenceFilter);
             setPage(1);
           }}
-          className="h-8 rounded-md border border-input bg-card px-2.5 text-[13px] text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="h-8 rounded-md border border-border bg-card px-2.5 text-[13px] text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary font-medium"
         >
           <option value="all">All confidence</option>
           <option value="high">High (85%+)</option>
@@ -144,9 +166,17 @@ export default function DatasetDetailPage({ params }: { params: { id: string } }
       </div>
 
       {dataset.rows.length === 0 ? (
-        <EmptyState icon={Database} title="No records yet" description="This dataset hasn't finished collecting records." />
+        <EmptyState
+          icon={ShipLogIcon}
+          title="No records yet"
+          description="This dataset hasn't finished collecting records."
+        />
       ) : filtered.length === 0 ? (
-        <EmptyState icon={Search} title="No matching records" description="Try a different search term or filter." />
+        <EmptyState
+          icon={SpyglassIcon}
+          title="No matching records"
+          description="Try a different search term or filter."
+        />
       ) : (
         <DataTable
           fields={dataset.fields}

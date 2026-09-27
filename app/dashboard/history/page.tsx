@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { Eye, RotateCcw, History as HistoryIcon } from "lucide-react";
+import { Eye, RotateCcw } from "lucide-react";
+import { HistoryScrollIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/common/status-badge";
 import { EmptyState } from "@/components/common/empty-state";
@@ -19,48 +20,72 @@ export default function HistoryPage() {
   const past = MOCK_WORKFLOWS.filter((w) => w.status !== "running" && w.status !== "planning");
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       <div>
-        <h1 className="text-lg font-semibold">History</h1>
-        <p className="mt-0.5 text-[13px] text-muted-foreground">Every past research request and its outcome.</p>
+        <div className="flex items-center gap-2 text-tan mb-1">
+          <HistoryScrollIcon className="h-4 w-4" />
+          <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            EXPEDITION ARCHIVE
+          </span>
+        </div>
+        <h1 className="font-serif text-2xl font-bold tracking-tight text-foreground md:text-3xl">
+          History
+        </h1>
+        <p className="mt-0.5 text-[13px] text-muted-foreground">
+          Historical log of completed voyages, datasets generated, and execution times.
+        </p>
       </div>
 
       {past.length === 0 ? (
-        <EmptyState icon={HistoryIcon} title="No history yet" description="Completed and failed workflows will appear here." />
+        <EmptyState
+          icon={HistoryScrollIcon}
+          title="No history yet"
+          description="Completed and archived research voyages will appear here."
+        />
       ) : (
-        <div className="overflow-hidden rounded-lg border border-border bg-card">
+        <div className="overflow-hidden rounded-lg border border-border bg-card shadow-subtle">
           <table className="w-full text-left text-[13px]">
-            <thead className="bg-surface">
+            <thead className="bg-surface/90 border-b border-border">
               <tr>
-                <th className="px-3 py-2.5 text-[11.5px] font-semibold uppercase tracking-wide text-muted-foreground">Workflow</th>
-                <th className="px-3 py-2.5 text-[11.5px] font-semibold uppercase tracking-wide text-muted-foreground">Status</th>
-                <th className="px-3 py-2.5 text-[11.5px] font-semibold uppercase tracking-wide text-muted-foreground">Records</th>
-                <th className="px-3 py-2.5 text-[11.5px] font-semibold uppercase tracking-wide text-muted-foreground">Sources</th>
-                <th className="px-3 py-2.5 text-[11.5px] font-semibold uppercase tracking-wide text-muted-foreground">Duration</th>
-                <th className="px-3 py-2.5 text-[11.5px] font-semibold uppercase tracking-wide text-muted-foreground">Date</th>
-                <th className="px-3 py-2.5" />
+                <th className="px-3.5 py-3 text-[11.5px] font-semibold uppercase tracking-wider text-muted-foreground">Workflow</th>
+                <th className="px-3.5 py-3 text-[11.5px] font-semibold uppercase tracking-wider text-muted-foreground">Status</th>
+                <th className="px-3.5 py-3 text-[11.5px] font-semibold uppercase tracking-wider text-muted-foreground">Records</th>
+                <th className="px-3.5 py-3 text-[11.5px] font-semibold uppercase tracking-wider text-muted-foreground">Sources</th>
+                <th className="px-3.5 py-3 text-[11.5px] font-semibold uppercase tracking-wider text-muted-foreground">Duration</th>
+                <th className="px-3.5 py-3 text-[11.5px] font-semibold uppercase tracking-wider text-muted-foreground">Date</th>
+                <th className="px-3.5 py-3" />
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-border/50">
               {past.map((w) => (
-                <tr key={w.id} className="border-t border-border transition-colors hover:bg-muted/60">
-                  <td className="px-3 py-2.5">
-                    <p className="max-w-[240px] truncate font-medium">{w.name}</p>
+                <tr key={w.id} className="transition-colors hover:bg-surface/60">
+                  <td className="px-3.5 py-3">
+                    <p className="max-w-[240px] truncate font-semibold text-foreground">{w.name}</p>
                     <p className="max-w-[240px] truncate text-[12px] text-muted-foreground">{w.prompt}</p>
                   </td>
-                  <td className="px-3 py-2.5">
+                  <td className="px-3.5 py-3">
                     <StatusBadge status={w.status} />
                   </td>
-                  <td className="px-3 py-2.5">{formatNumber(w.validRecords)}</td>
-                  <td className="px-3 py-2.5">{w.sourcesProcessed}</td>
-                  <td className="px-3 py-2.5 text-muted-foreground">{formatDuration(w.durationSec)}</td>
-                  <td className="px-3 py-2.5 text-muted-foreground">{formatDate(w.createdAt)}</td>
-                  <td className="px-3 py-2.5">
+                  <td className="px-3.5 py-3 font-medium text-foreground">{formatNumber(w.validRecords)}</td>
+                  <td className="px-3.5 py-3 text-muted-foreground">{w.sourcesProcessed}</td>
+                  <td className="px-3.5 py-3 text-muted-foreground">{formatDuration(w.durationSec)}</td>
+                  <td className="px-3.5 py-3 text-muted-foreground">{formatDate(w.createdAt)}</td>
+                  <td className="px-3.5 py-3">
                     <div className="flex justify-end gap-1.5">
-                      <Button variant="outline" size="icon" className="h-7 w-7" onClick={() => router.push(`/dashboard/workflows/${w.id}`)}>
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        className="h-7 w-7 bg-card border-border/80"
+                        onClick={() => router.push(`/dashboard/workflows/${w.id}`)}
+                      >
                         <Eye className="h-3.5 w-3.5" />
                       </Button>
-                      <Button variant="outline" size="icon" className="h-7 w-7" onClick={() => router.push(`/dashboard/research/new?prompt=${encodeURIComponent(w.prompt)}`)}>
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        className="h-7 w-7 bg-card border-border/80"
+                        onClick={() => router.push(`/dashboard/research/new?prompt=${encodeURIComponent(w.prompt)}`)}
+                      >
                         <RotateCcw className="h-3.5 w-3.5" />
                       </Button>
                     </div>
