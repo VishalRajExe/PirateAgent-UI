@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Anchor } from "lucide-react";
-import { GetStartedButton } from "./GetStartedButton";
 
 export function PirateNavbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -27,9 +26,6 @@ export function PirateNavbar() {
           <Anchor className="text-current" />
           <span>PIRATEAGENT</span>
         </Link>
-
-        {/* Simplified navigation: single primary action */}
-        <GetStartedButton size="nav" className="shadow-sm" />
       </nav>
     </header>
   );
